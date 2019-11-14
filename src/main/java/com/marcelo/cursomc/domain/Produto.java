@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable {
+public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,16 +15,21 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    private double valor;
 
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn (name = "categoria_id")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
 
-    public Categoria() {
+    public Produto() {
     }
 
-    public Categoria(Integer id, String nome) {
+    public Produto(Integer id, String nome, double valor) {
         this.id = id;
         this.nome = nome;
+        this.valor = valor;
     }
 
     public Integer getId() {
@@ -43,33 +48,32 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-
-    public List<Produto> getProdutos() {
-        return produtos;
+    public double getValor() {
+        return valor;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return id.equals(categoria.id);
+        Produto produto = (Produto) o;
+        return Objects.equals(id, produto.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Categoria{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
     }
 }
