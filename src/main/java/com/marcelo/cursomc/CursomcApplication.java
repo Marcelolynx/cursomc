@@ -1,5 +1,6 @@
 package com.marcelo.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ import com.marcelo.cursomc.domain.Cidade;
 import com.marcelo.cursomc.domain.Cliente;
 import com.marcelo.cursomc.domain.Endereco;
 import com.marcelo.cursomc.domain.Estado;
+import com.marcelo.cursomc.domain.EstadoPagamento;
+import com.marcelo.cursomc.domain.Pagamento;
+import com.marcelo.cursomc.domain.PagamentoComCartao;
+import com.marcelo.cursomc.domain.Pedido;
 import com.marcelo.cursomc.domain.Produto;
 import com.marcelo.cursomc.domain.TipoCliente;
 import com.marcelo.cursomc.repositories.CategoriaRepository;
@@ -19,6 +24,8 @@ import com.marcelo.cursomc.repositories.CidadeRepository;
 import com.marcelo.cursomc.repositories.ClienteRepository;
 import com.marcelo.cursomc.repositories.EnderecoRepository;
 import com.marcelo.cursomc.repositories.EstadoRepository;
+import com.marcelo.cursomc.repositories.PagamentoRepository;
+import com.marcelo.cursomc.repositories.PedidoRepository;
 import com.marcelo.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -42,14 +49,22 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
-    }
     
+    
+    }
+     
     @Override
     public void run(String... args) throws Exception {
-	    Categoria cat1 = new Categoria(null, "Sedan");
+	   Categoria cat1 = new Categoria(null, "Sedan");
 	    Categoria cat2 = new Categoria(null, "Hatch");
 	    Categoria cat3 = new Categoria(null, "Utilitário");
 	    Categoria cat4 = new Categoria(null, "SUV");
@@ -105,5 +120,20 @@ public class CursomcApplication implements CommandLineRunner {
     	clienteRepository.saveAll(Arrays.asList(cliente));
     	enderecoRepository.saveAll(Arrays.asList(end1));
     	
-    }
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    	
+    	Pedido pedido = new  Pedido(null, sdf.parse("11/12/2019 16:27"), cliente, end1);    	
+    	
+    	Pagamento pagamento = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido, 6);
+    	pedido.setPagamento(pagamento);
+    	
+    	cliente.getPedidos().addAll(Arrays.asList(pedido));
+    	
+    	
+    	pedidoRepository.saveAll(Arrays.asList(pedido));
+    	pagamentoRepository.saveAll(Arrays.asList(pagamento));
+    	}
+    	
+    
 }
+	 

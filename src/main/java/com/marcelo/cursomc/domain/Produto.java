@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Produto implements Serializable {
@@ -19,6 +21,8 @@ public class Produto implements Serializable {
     private Integer id;
     private String nome;
     private double valor;
+    
+    private Set<ItemPedido> itens = new HashSet<>();
 
     @JsonBackReference
     @ManyToMany
@@ -36,6 +40,23 @@ public class Produto implements Serializable {
         this.nome = nome;
         this.valor = valor;
     }
+    
+    public List<Pedido> getPedidos() {
+    	List<Pedido> lista = new ArrayList<>();
+    	for(ItemPedido x : itens) {
+    		lista.add(x.getPedido());
+    	}
+    	
+    	return lista;
+    }
+    
+    public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
 
     public Integer getId() {
         return id;
@@ -81,4 +102,6 @@ public class Produto implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+	
 }

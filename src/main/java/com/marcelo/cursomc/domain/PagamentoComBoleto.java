@@ -2,6 +2,9 @@ package com.marcelo.cursomc.domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity
 public class PagamentoComBoleto extends Pagamento {
 	
 	 private static final long serialVersionUID = 1L;
