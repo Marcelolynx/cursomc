@@ -14,6 +14,7 @@ import com.marcelo.cursomc.domain.Cliente;
 import com.marcelo.cursomc.domain.Endereco;
 import com.marcelo.cursomc.domain.Estado;
 import com.marcelo.cursomc.domain.EstadoPagamento;
+import com.marcelo.cursomc.domain.ItemPedido;
 import com.marcelo.cursomc.domain.Pagamento;
 import com.marcelo.cursomc.domain.PagamentoComCartao;
 import com.marcelo.cursomc.domain.Pedido;
@@ -24,6 +25,7 @@ import com.marcelo.cursomc.repositories.CidadeRepository;
 import com.marcelo.cursomc.repositories.ClienteRepository;
 import com.marcelo.cursomc.repositories.EnderecoRepository;
 import com.marcelo.cursomc.repositories.EstadoRepository;
+import com.marcelo.cursomc.repositories.ItemPedidoRepository;
 import com.marcelo.cursomc.repositories.PagamentoRepository;
 import com.marcelo.cursomc.repositories.PedidoRepository;
 import com.marcelo.cursomc.repositories.ProdutoRepository;
@@ -56,6 +58,10 @@ public class CursomcApplication implements CommandLineRunner {
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
+    
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
+    
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
 
@@ -96,16 +102,20 @@ public class CursomcApplication implements CommandLineRunner {
 
         Estado est1 = new Estado(null, "Mato Grosso do Sul");
         Estado est2 = new Estado(null, "Mato Grosso");
+        Estado est3 = new Estado(null, "Goias");
+        Estado est4 = new Estado(null, "Brasília");
 
         Cidade c1 = new Cidade(null, "Campo Grande", est1);
         Cidade c2 = new Cidade(null, "Cuiabá", est2);
         Cidade c3 = new Cidade(null, "Varzea Grande", est2);
+        Cidade c4 = new Cidade(null, "Goiânia", est3);
+        Cidade c5 = new Cidade(null, "Brasília", est4);
 
         est1.getCidades().addAll(Arrays.asList(c1));
         est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-        estadoRepository.saveAll(Arrays.asList(est1, est2));
-        cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+        estadoRepository.saveAll(Arrays.asList(est1, est2, est3, est4));
+        cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
 
 
         Cliente cliente = new Cliente(null, "Maria Clara", "maria_clara@gmail.com", "123151698-00", TipoCliente.PESSOAFISICA);
@@ -131,6 +141,17 @@ public class CursomcApplication implements CommandLineRunner {
 
         pedidoRepository.saveAll(Arrays.asList(pedido));
         pagamentoRepository.saveAll(Arrays.asList(pagamento));
+        
+        
+        ItemPedido ip1 = new ItemPedido(pedido, p1, 0.00, 1, 2000.00);
+        ItemPedido ip2 = new ItemPedido(pedido, p3, 0.00, 2, 80.00);
+        
+        pedido.getItens().addAll(Arrays.asList(ip1, ip2));
+        
+        p1.getItens().addAll(Arrays.asList(ip1));
+        p2.getItens().addAll(Arrays.asList(ip2));
+        
+        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2));
     }
 
 
