@@ -1,6 +1,6 @@
 package com.marcelo.cursomc.repositories;
 
- 
+
 import com.marcelo.cursomc.domain.Cliente;
 
 import org.springframework.data.jpa.repository.JpaRepository;

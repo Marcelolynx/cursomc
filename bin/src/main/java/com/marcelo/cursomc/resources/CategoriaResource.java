@@ -8,30 +8,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marcelo.cursomc.domain.Categoria;
- 
 
- 
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-   
-   @RequestMapping(method = RequestMethod.GET)
-   public List<Categoria> listar() {
-	   
-	   Categoria cat1 = new Categoria(1, "Esportivos");
-	   Categoria cat2 = new Categoria(2, "SUV");
-	   
-	   
-	   List<Categoria> lista = new ArrayList<>();
-	   
-	   lista.add(cat1);
-	   lista.add(cat2);
-	   
-	   
-	   return lista;
-   }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Categoria> listar() {
+
+        Categoria cat1 = new Categoria(1, "Esportivos");
+        Categoria cat2 = new Categoria(2, "SUV");
+
+
+        List<Categoria> lista = new ArrayList<>();
+
+        lista.add(cat1);
+        lista.add(cat2);
+
+
+        return lista;
+    }
 
 
 }

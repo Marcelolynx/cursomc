@@ -1,6 +1,6 @@
 package com.marcelo.cursomc.resources;
 
- 
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,31 +12,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marcelo.cursomc.domain.Categoria;
 import com.marcelo.cursomc.services.CategoriaService;
- 
 
- 
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
-	
-	@Autowired
-	private CategoriaService categoriaService;
 
-   
-   @RequestMapping(value="/{id}", method = RequestMethod.GET)
-   public ResponseEntity<?> findId(@PathVariable Integer id) {
-	   
-	   Optional<Categoria> obj =  categoriaService.search(id);
-	   
-	   return ResponseEntity.ok().body(obj);
-   }
-   
-   @RequestMapping(value="/hello", method = RequestMethod.GET)
-   public String sayHello( ) {
-	   return "Hello Java";
-   }
+    @Autowired
+    private CategoriaService categoriaService;
 
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> findId(@PathVariable Integer id) {
+
+        Optional<Categoria> obj = categoriaService.search(id);
+
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String sayHello() {
+        return "Hello Java";
+    }
 
 
 }

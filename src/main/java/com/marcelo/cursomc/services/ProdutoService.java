@@ -10,16 +10,16 @@ import com.marcelo.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class ProdutoService {
-	
-	@Autowired
-	private ProdutoRepository produtoRepository;
-	
-	public Optional<Produto> search(Integer id) {
-    	
-    	Optional<Produto> obj = produtoRepository.findById(id);
-    	
-    	return obj;
-    	
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
+    public Optional<Produto> search(Integer id) {
+
+        Optional<Produto> obj = produtoRepository.findById(id);
+
+        return obj;
+
     }
 
 }

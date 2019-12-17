@@ -15,79 +15,77 @@ import javax.persistence.OneToOne;
 public class Pagamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
-	
-	
-	public Pagamento() {
-		super();
-	}
-
-	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
-		super();
-		this.id = id;
-		this.estado = estado.getCod();
-		this.pedido = pedido;
-	}
-
-	@Id
-	private Integer id;
-	private Integer estado;
-	
-	@OneToOne
-	@JoinColumn(name="pedido_id")
-	@MapsId
-	private Pedido pedido;
 
 
-	public Integer getId() {
-		return id;
-	}
+    public Pagamento() {
+        super();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+        super();
+        this.id = id;
+        this.estado = estado.getCod();
+        this.pedido = pedido;
+    }
 
-	public EstadoPagamento getEstado() {
-		return EstadoPagamento.toEnum(estado);
-	}
+    @Id
+    private Integer id;
+    private Integer estado;
 
-	public void setEstado(EstadoPagamento estado) {
-		this.estado = estado.getCod();
-	}
+    @OneToOne
+    @JoinColumn(name = "pedido_id")
+    @MapsId
+    private Pedido pedido;
 
-	public Pedido getPedido() {
-		return pedido;
-	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pagamento other = (Pagamento) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
-	
+    public EstadoPagamento getEstado() {
+        return EstadoPagamento.toEnum(estado);
+    }
+
+    public void setEstado(EstadoPagamento estado) {
+        this.estado = estado.getCod();
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Pagamento other = (Pagamento) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
 
 }
