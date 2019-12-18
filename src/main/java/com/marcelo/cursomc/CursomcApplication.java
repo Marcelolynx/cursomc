@@ -16,6 +16,7 @@ import com.marcelo.cursomc.domain.Estado;
 import com.marcelo.cursomc.domain.EstadoPagamento;
 import com.marcelo.cursomc.domain.ItemPedido;
 import com.marcelo.cursomc.domain.Pagamento;
+import com.marcelo.cursomc.domain.PagamentoComBoleto;
 import com.marcelo.cursomc.domain.PagamentoComCartao;
 import com.marcelo.cursomc.domain.Pedido;
 import com.marcelo.cursomc.domain.Produto;
@@ -70,6 +71,7 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+    	
         Categoria cat1 = new Categoria(null, "Sedan");
         Categoria cat2 = new Categoria(null, "Hatch");
         Categoria cat3 = new Categoria(null, "Utilitário");
@@ -82,11 +84,13 @@ public class CursomcApplication implements CommandLineRunner {
         Produto p4 = new Produto(null, "UP", 58000.00);
         Produto p5 = new Produto(null, "Virtus", 78000.00);
         Produto p6 = new Produto(null, "Tiguan", 178000.00);
+        Produto p7 = new Produto(null, "Amarok", 200000.00);
 
 
         cat1.getProdutos().addAll(Arrays.asList(p1, p5));
         cat2.getProdutos().addAll(Arrays.asList(p2, p3, p4));
         cat4.getProdutos().addAll(Arrays.asList(p6));
+        cat3.getProdutos().addAll(Arrays.asList(p7));
 
 
         p1.getCategorias().addAll(Arrays.asList(cat1));
@@ -95,10 +99,11 @@ public class CursomcApplication implements CommandLineRunner {
         p4.getCategorias().addAll(Arrays.asList(cat2));
         p5.getCategorias().addAll(Arrays.asList(cat1));
         p6.getCategorias().addAll(Arrays.asList(cat4));
+        p7.getCategorias().addAll(Arrays.asList(cat3));
 
 
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
-        produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
+        produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7));
 
         Estado est1 = new Estado(null, "Mato Grosso do Sul");
         Estado est2 = new Estado(null, "Mato Grosso");
@@ -119,39 +124,50 @@ public class CursomcApplication implements CommandLineRunner {
 
 
         Cliente cliente = new Cliente(null, "Maria Clara", "maria_clara@gmail.com", "123151698-00", TipoCliente.PESSOAFISICA);
+        Cliente cliente2 = new Cliente(null, "João Claudio", "jc_fazendanovalianca@gmail.com", "13298991-00", TipoCliente.PESSOAFISICA);
 
         cliente.getTelefones().addAll(Arrays.asList("6727363323", "6799938393"));
+        cliente2.getTelefones().addAll(Arrays.asList("67992320990", "67984329009"));
 
         Endereco end1 = new Endereco(null, "Rua Mira Flores", "300", "Casa", "Novo Horizonte", "24098-900", cliente, c3);
+        Endereco end2 = new Endereco(null, "Rua Rubens Gilde Camilo", "162", "Casa", "Residencial Damha IV", "79002-440", cliente2, c1);
 
         cliente.getEnderecos().addAll(Arrays.asList(end1));
+        cliente2.getEnderecos().addAll(Arrays.asList(end2));
 
-        clienteRepository.saveAll(Arrays.asList(cliente));
-        enderecoRepository.saveAll(Arrays.asList(end1));
+        clienteRepository.saveAll(Arrays.asList(cliente, cliente2));
+        enderecoRepository.saveAll(Arrays.asList(end1, end2));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         Pedido pedido = new Pedido(null, sdf.parse("11/12/2019 16:27"), cliente, end1);
+        Pedido pedido2 = new Pedido(null, sdf.parse("18/12/2019 08:27"), cliente2, end2);
 
         Pagamento pagamento = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido, 6);
+        Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, sdf.parse("20/01/2019 09:07"), null);
+        
         pedido.setPagamento(pagamento);
+        pedido2.setPagamento(pagamento2);
 
         cliente.getPedidos().addAll(Arrays.asList(pedido));
+        cliente2.getPedidos().addAll(Arrays.asList(pedido2));
 
 
-        pedidoRepository.saveAll(Arrays.asList(pedido));
-        pagamentoRepository.saveAll(Arrays.asList(pagamento));
+        pedidoRepository.saveAll(Arrays.asList(pedido, pedido2));
+        pagamentoRepository.saveAll(Arrays.asList(pagamento, pagamento2));
         
         
-        ItemPedido ip1 = new ItemPedido(pedido, p1, 0.00, 1, 2000.00);
-        ItemPedido ip2 = new ItemPedido(pedido, p3, 0.00, 2, 80.00);
+        ItemPedido ip1 = new ItemPedido(pedido, p1, 0.00, 1, 200000.00);
+        ItemPedido ip2 = new ItemPedido(pedido, p3, 0.00, 1, 80000.00);
+        ItemPedido ip3 = new ItemPedido(pedido2,p7, 0.00, 2, 200000.00);
         
-        pedido.getItens().addAll(Arrays.asList(ip1, ip2));
+        pedido.getItens().addAll(Arrays.asList(ip1, ip2, ip3));
         
         p1.getItens().addAll(Arrays.asList(ip1));
         p2.getItens().addAll(Arrays.asList(ip2));
+        p7.getItens().addAll(Arrays.asList(ip3));
         
-        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2));
+        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
     }
 
 
