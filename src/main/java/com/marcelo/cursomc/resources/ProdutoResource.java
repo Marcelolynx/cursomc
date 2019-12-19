@@ -22,7 +22,7 @@ public class ProdutoResource {
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	   public ResponseEntity<?> toList(@PathVariable Integer id) {
 		   
-		 Optional<Produto> obj =  produtoService.search(id);
+		 Optional<Produto> obj =  produtoService.find(id);
 		   
 		   return ResponseEntity.ok().body(obj);
 	   }
