@@ -3,7 +3,10 @@ package com.marcelo.cursomc.services;
 import com.marcelo.cursomc.domain.Categoria;
 import com.marcelo.cursomc.exceptions.ObjectNotFoundException;
 import com.marcelo.cursomc.repositories.CategoriaRepository;
+import com.marcelo.cursomc.services.exceptions.DataIntegretyException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -38,5 +41,16 @@ public class CategoriaService {
     	}
     	return categoriaRepository.save(obj);
     }
+    
+    public void delete(Integer id) {
+    	find(id);
+    	try {
+    	categoriaRepository.deleteById(id);
+    
+    	}
+    	catch (DataIntegrityViolationException e) {
+    		throw new DataIntegretyException("Não é possível deletar uma Categoria que tenha produtos relacionados");
+    	}
+   }
 
 }
