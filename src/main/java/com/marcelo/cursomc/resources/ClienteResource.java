@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import com.marcelo.cursomc.domain.Cliente;
 import com.marcelo.cursomc.services.ClienteService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
@@ -30,7 +32,15 @@ public class ClienteResource {
 
         return ResponseEntity.ok().body(obj);
     }
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
+        Cliente obj = clienteService.fromDTO(objDto);
+        obj.setId(id);
+        obj = clienteService.update(obj);
 
+        return ResponseEntity.noContent().build();
+
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
@@ -62,6 +72,7 @@ public class ClienteResource {
 
         return ResponseEntity.ok().body(listDto);
     }
+
 
 
 }

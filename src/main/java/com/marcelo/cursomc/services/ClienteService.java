@@ -31,22 +31,22 @@ public class ClienteService {
 
     }
 
+
     public Cliente update(Cliente obj) {
         find(obj.getId());
         if(obj.getId() == null) {
-            throw new ObjectNotFoundException("Objeto não encontrado! " + "Tipo: " + Categoria.class.getName());
+            throw new ObjectNotFoundException("Objeto não encontrado! " + "Tipo: " + Cliente.class.getName());
         }
         return clienteRepository.save(obj);
     }
 
     public void delete(Integer id) {
         find(id);
-        try {
-            clienteRepository.deleteById(id);
+        try { clienteRepository.deleteById(id);
 
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegretyException("Não é possível deletar uma Categoria que tenha produtos relacionados");
+            throw new DataIntegretyException("Não é possível deletar uma Cliente que tenha atendimentos relacionados");
         }
     }
 
@@ -68,9 +68,10 @@ public class ClienteService {
                 objDto.getEmail(),
                 null,
                 null
-        );
+                );
     }
 
+
+
+
 }
-
-
