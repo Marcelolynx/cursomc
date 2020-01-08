@@ -1,5 +1,6 @@
 package com.marcelo.cursomc.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 import com.marcelo.cursomc.domain.Categoria;
 import com.marcelo.cursomc.dto.CategoriaDTO;
 import com.marcelo.cursomc.dto.ClienteDTO;
+import com.marcelo.cursomc.dto.ClienteNewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.marcelo.cursomc.domain.Cliente;
 import com.marcelo.cursomc.services.ClienteService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -71,6 +74,20 @@ public class ClienteResource {
         Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));
 
         return ResponseEntity.ok().body(listDto);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Object> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+        Cliente obj = clienteService.fromDTO(objDto);
+        obj = clienteService.insert(obj);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(obj.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
 
