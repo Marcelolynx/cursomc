@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.marcelo.cursomc.domain.*;
-import com.marcelo.cursomc.dto.CategoriaDTO;
 import com.marcelo.cursomc.dto.ClienteDTO;
 import com.marcelo.cursomc.dto.ClienteNewDTO;
 import com.marcelo.cursomc.exceptions.ObjectNotFoundException;
 import com.marcelo.cursomc.repositories.EnderecoRepository;
-import com.marcelo.cursomc.services.exceptions.DataIntegretyException;
+import com.marcelo.cursomc.services.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -57,7 +56,7 @@ public class ClienteService {
 
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegretyException("Não é possível deletar uma Cliente que tenha atendimentos relacionados");
+            throw new DataIntegrityException("Não é possível deletar uma Cliente que tenha atendimentos relacionados");
         }
     }
 

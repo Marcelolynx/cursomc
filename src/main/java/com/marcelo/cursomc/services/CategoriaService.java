@@ -4,7 +4,7 @@ import com.marcelo.cursomc.domain.Categoria;
 import com.marcelo.cursomc.dto.CategoriaDTO;
 import com.marcelo.cursomc.exceptions.ObjectNotFoundException;
 import com.marcelo.cursomc.repositories.CategoriaRepository;
-import com.marcelo.cursomc.services.exceptions.DataIntegretyException;
+import com.marcelo.cursomc.services.exceptions.DataIntegrityException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,7 +51,7 @@ public class CategoriaService {
     
     	}
     	catch (DataIntegrityViolationException e) {
-    		throw new DataIntegretyException("Não é possível deletar uma Categoria que tenha produtos relacionados");
+    		throw new DataIntegrityException("Não é possível deletar uma Categoria que tenha produtos relacionados");
     	}
    }
     
