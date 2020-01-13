@@ -76,6 +76,8 @@ public class CursomcApplication implements CommandLineRunner {
         Categoria cat2 = new Categoria(null, "Hatch");
         Categoria cat3 = new Categoria(null, "Pick-up");
         Categoria cat4 = new Categoria(null, "SUV");
+        Categoria cat5 = new Categoria(null, "Hibrid");
+        Categoria cat6 = new Categoria(null, "Eletric");
 
 
         Produto p1 = new Produto(null, "Jetta", 128000.00);
@@ -85,12 +87,16 @@ public class CursomcApplication implements CommandLineRunner {
         Produto p5 = new Produto(null, "Virtus", 78000.00);
         Produto p6 = new Produto(null, "Tiguan", 178000.00);
         Produto p7 = new Produto(null, "Amarok", 200000.00);
+        Produto p8 = new Produto(null, "ID.3", 280000.00);
+        Produto p9 = new Produto(null, "GOLF-GTE", 250000.00);
 
 
         cat1.getProdutos().addAll(Arrays.asList(p1, p5));
         cat2.getProdutos().addAll(Arrays.asList(p2, p3, p4));
         cat4.getProdutos().addAll(Arrays.asList(p6));
         cat3.getProdutos().addAll(Arrays.asList(p7));
+        cat5.getProdutos().addAll(Arrays.asList(p9));
+        cat6.getProdutos().addAll(Arrays.asList(p8));
 
 
         p1.getCategorias().addAll(Arrays.asList(cat1));
@@ -100,10 +106,12 @@ public class CursomcApplication implements CommandLineRunner {
         p5.getCategorias().addAll(Arrays.asList(cat1));
         p6.getCategorias().addAll(Arrays.asList(cat4));
         p7.getCategorias().addAll(Arrays.asList(cat3));
+        p8.getCategorias().addAll(Arrays.asList(cat6));
+        p9.getCategorias().addAll(Arrays.asList(cat5));
 
 
-        categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
-        produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7));
+        categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4,cat5, cat6));
+        produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));
 
         Estado est1 = new Estado(null, "Mato Grosso do Sul");
         Estado est2 = new Estado(null, "Mato Grosso");
