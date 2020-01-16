@@ -1,8 +1,11 @@
 package com.marcelo.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.Entity;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 	
 	 private static final long serialVersionUID = 1L;

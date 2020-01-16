@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.marcelo.cursomc.domain.Pedido; 
 import com.marcelo.cursomc.repositories.PedidoRepository;
 import com.marcelo.cursomc.services.exceptions.ObjectNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PedidoService {
@@ -25,6 +26,13 @@ public class PedidoService {
         	
         	return obj;
 
+    }
+
+    @Transactional
+    public Pedido insert(Pedido obj) {
+
+
+        return obj;
     }
 
 }
