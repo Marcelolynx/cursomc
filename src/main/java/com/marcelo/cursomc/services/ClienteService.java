@@ -27,14 +27,14 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Optional<Cliente> find(Integer id) {
+    public Cliente find(Integer id) {
 
         Optional<Cliente> obj = clienteRepository.findById(id);
-        return obj;
-
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
 
-    public Cliente insert (Cliente obj) {
+    public Cliente insert(Cliente obj) {
         obj.setId(null);
         obj = clienteRepository.save(obj);
         enderecoRepository.saveAll(obj.getEnderecos());
@@ -44,7 +44,7 @@ public class ClienteService {
 
     public Cliente update(Cliente obj) {
         find(obj.getId());
-        if(obj.getId() == null) {
+        if (obj.getId() == null) {
             throw new ObjectNotFoundException("Objeto não encontrado! " + "Tipo: " + Cliente.class.getName());
         }
         return clienteRepository.save(obj);
@@ -52,10 +52,10 @@ public class ClienteService {
 
     public void delete(Integer id) {
         find(id);
-        try { clienteRepository.deleteById(id);
+        try {
+            clienteRepository.deleteById(id);
 
-        }
-        catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possível deletar uma Cliente que tenha atendimentos relacionados");
         }
     }
@@ -77,32 +77,23 @@ public class ClienteService {
                 objDto.getNome(),
                 objDto.getEmail(),
                 null,
+                null,
                 null
-                );
+        );
     }
 
     public Cliente fromDTO(ClienteNewDTO objDto) {
-        Cidade cidade = new Cidade(objDto.getCidadeId(), null, null);
-        Cliente cliente = new Cliente(
-                null, objDto.getNome(),
-                objDto.getEmail(),
-                objDto.getCpfouCnpj(),
-                TipoCliente.toEnum(objDto.getTipo()));
-        Endereco endereco = new Endereco(
-                null,
-                objDto.getLogradouro(),
-                objDto.getNumero(),
-                objDto.getComplemento(),
-                objDto.getBairro(),
-                objDto.getCep(), cliente, cidade );
-        cliente.getEnderecos().add(endereco);
-        cliente.getTelefones().add(objDto.getTelefone1());
-        if(objDto.getTelefone2() != null) {
-            cliente.getTelefones().add(objDto.getTelefone2());
+        Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()), objDto.getSenha());
+        Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
+        Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
+        cli.getEnderecos().add(end);
+        cli.getTelefones().add(objDto.getTelefone1());
+        if (objDto.getTelefone2() != null) {
+            cli.getTelefones().add(objDto.getTelefone2());
         }
-        if(objDto.getTelefone3() != null) {
-            cliente.getTelefones().add(objDto.getTelefone3());
+        if (objDto.getTelefone3() != null) {
+            cli.getTelefones().add(objDto.getTelefone3());
         }
-        return cliente;
+        return cli;
     }
 }

@@ -1,5 +1,7 @@
 package com.marcelo.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -32,6 +34,7 @@ public class Cidade implements Serializable {
 
      
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "estado_id")
     private Estado estado;
 

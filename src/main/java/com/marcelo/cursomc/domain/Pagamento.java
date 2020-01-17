@@ -14,6 +14,15 @@ public abstract class Pagamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    private Integer id;
+    private Integer estado;
+
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "pedido_id")
+    @MapsId
+    private Pedido pedido;
 
     public Pagamento() {
         super();
@@ -25,16 +34,6 @@ public abstract class Pagamento implements Serializable {
         this.estado = (estado == null) ? null : estado.getCod();
         this.pedido = pedido;
     }
-
-    @Id
-    private Integer id;
-    private Integer estado;
-
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "pedido_id")
-    @MapsId
-    private Pedido pedido;
 
 
     public Integer getId() {

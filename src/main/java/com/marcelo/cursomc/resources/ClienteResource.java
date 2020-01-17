@@ -28,13 +28,12 @@ public class ClienteResource {
     private ClienteService clienteService;
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> findId(@PathVariable Integer id) {
-
-        Optional<Cliente> obj = clienteService.find(id);
-
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Cliente> find(@PathVariable Integer id) {
+        Cliente obj = clienteService.find(id);
         return ResponseEntity.ok().body(obj);
     }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
         Cliente obj = clienteService.fromDTO(objDto);
