@@ -18,6 +18,10 @@ envio-email-dados-google.rtf
 *.iws
 *.iml
 *.ipr
+####E-MAIL####
+application-dev.properties
+application-prod.properties
+application.properties
 
 ### NetBeans ###
 /nbproject/private/
